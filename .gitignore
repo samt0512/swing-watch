@@ -1,0 +1,9 @@
+statcast_cache/
+watchlist_*.txt
+watchlist_*.csv
+*.json
+__pycache__/
+*.pyc
+.DS_Store
+setup files(no longer need)/
+watchlists/
