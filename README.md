@@ -15,6 +15,7 @@ The detection parameters used to define a "slumping" hitter:
   Across 3 consecutive 14-day windows, a hitter's:
   * Fastball late% must rise 20+ percentage points
   * Fastball miss distance must be trending up
+  * wOBA decline of 50+ points
 
 This data is validated across:
   * 3 seasons(2023(half season), 2024(full season), 2025(full season))
@@ -69,10 +70,10 @@ Within these 3 sections, each includes:
 - Player column: player name
 - Arc: the windows across which their fastball late % increased
 - Rise: how much the players fastball late % increased
-- Pre: the player's wOBA before the arc.
-- Now: the player's wOBA during this window.
-- Season: the player's season to date wOBA.
-- Status: the player's current status based on how their wOBA has responded to the timing drift.
+- Pre: the player's wOBA before the arc
+- Now: the player's wOBA during this window
+- Season: the player's season to date wOBA
+- Status: the player's current status based on how their wOBA has responded to the timing drift
 
 ```
 ====================================================================
@@ -122,3 +123,25 @@ Within these 3 sections, each includes:
   Predictive window: ~1–2 weeks before stats move (24% of cases)
 ====================================================================
 ```
+
+# Limitations
+
+There are some limitations to this tool that should be pointed out:
+
+* When a player is flagged, their wOBA drops 50+ points during or after the detection window 56.3% of the time, compared to 46.5% by chance.
+
+* With the predictive rate at 24.1%, most players tagged are already slumping, not about to slump.
+
+* Players below the .300 wOBA baseline have much lower confidence than the ones above.
+
+* The tool can't distinguish between mechanical breakdown and approach changes; some players swing metrics may decline, not because their swing is breaking down.
+
+* The 2023 data is only from the second half of the season so its validation weight is lesser than the other 2 seasons.
+
+* wOBA over a 14-day period may be noisy, I tried my best to combat this with requiring players to have a wOBA drop of 50+ points to be considered slumping.
+
+Overall, the tool works well at defining players that are slumping already using their swing metrics and wOBA, while predicting players that will slump it is not so great at. This can be used as a good tool to see slumping hitters as well as see how swing metrics correlate to performance.
+
+# Data Sources
+
+All swing timing and miss distance data is sourced from [Baseball Savant](https://baseballsavant.mlb.com), which is powered by [MLB Statcast](https://www.mlb.com/statcast). Player performance data (wOBA) is also pulled directly from Baseball Savant via their Statcast search API.
