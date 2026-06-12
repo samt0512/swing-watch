@@ -2,20 +2,30 @@
 
 A python script that builds a weekly watchlist for slumping hitters.
 
+# Table of Contents
+- [Description](#description)
+- [Methodology](#methodology)
+- [How to Run](#how-to-run)
+- [Output Example](#output-example)
+- [Limitations](#limitations)
+- [Data Sources](#data-sources)
+
 # Description
 
 Using newly released Baseball Savant bat data and Statcast wOBA, this script creates a watchlist of players with declining swing mechanics that are slumping, could potentially slump soon, or other edge cases(wOBA holding steady/increasing) over the previous month.
 
 # Methodology
 
-The newly released Baseball Savant data includes miss distance and swing timing data for all batters starting in the second half of the 2023 season. Using this data, I built a script that splits the season up into 14-day windows. It then looks at each hitters wOBA, fastball late%, and fastball swing miss distance to create a watchlist of players.
+The newly released Baseball Savant data includes miss distance and swing timing data for all batters starting in the second half of the 2023 season. Using this data, I built a script that splits the season up into 14-day windows. It then looks at each hitter's wOBA, fastball late%, and fastball swing miss distance to create a watchlist of players.
 
-The detection parameters used to define a "slumping" hitter:
+The detection parameters used to flag a hitter:
   
   Across 3 consecutive 14-day windows, a hitter's:
   * Fastball late% must rise 20+ percentage points
   * Fastball miss distance must be trending up
-  * wOBA decline of 50+ points
+
+  How a "slumping" player is defined for validation purposes:
+  * A wOBA decline of 50+ points compared to the player's average wOBA in the 2 windows before the arc started
 
 This data is validated across:
   * 3 seasons(2023(half season), 2024(full season), 2025(full season))
@@ -51,7 +61,7 @@ To verify the methodology, download the three season CSVs from the `data/` folde
 3. `python3 multi_signal_sweep.py` — shows how the two-signal combination was selected
 4. `python3 base_rate.py` — verifies the baseline comparison
 
-# Output example
+# Output Example
 
 The output for the script comes in the form of a .txt file. Ex. watchlist_2026_06_11.txt.
 
